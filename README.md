@@ -1,14 +1,14 @@
 atcoder abc resolver
 
 # description
-c++をビルドし、[https://atcoder.jp/](atcoder)の入力例と出力例とのテストを自動化するツールです。
+c++をビルドし、[atcoder](https://atcoder.jp/)の入力例と出力例とのテストを自動化するツールです。
 
 # setup
 bashで動作します。
 rubyとg++が必要です。
 
 # usage
-[https://atcoder.jp/contests/abc144/tasks/abc144_b](abc144_b)を実施する場合、このファイルと同じディレクトリに`abc144_b.cpp`を作成後、下記のコマンドを実行します。
+[abc144_b](https://atcoder.jp/contests/abc144/tasks/abc144_b)を実施する場合、このファイルと同じディレクトリに`abc144_b.cpp`を作成後、下記のコマンドを実行します。
 ```
 ruby resolver/resolv.rb abc144_b
 ```
