@@ -1,7 +1,7 @@
 require "open-uri"
 require "time"
 CUR = __dir__ + '/../'
-ARGV.map{|a| a.split(/[^a-z0-9_]+/)}.flatten.each do |number|
+ARGV.each do |number|
   match = number.match(/([a-z0-9]+)_([0-9a-z])/)
   contest = match[1]
   c = match[2]
@@ -9,16 +9,20 @@ ARGV.map{|a| a.split(/[^a-z0-9_]+/)}.flatten.each do |number|
   # テストケースをダウンロードする
   unless File.exist?("#{dir}input1.txt")
     `mkdir -p #{dir}`
-    match = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}").read.match(
-      /<h3>Sample Input 1<\/h3><pre>(.+)<\/pre>.*<h3>Sample Output 1<\/h3><pre>(.+)<\/pre>.*<h3>Sample Input 2<\/h3><pre>(.+)<\/pre>.*<h3>Sample Output 2<\/h3><pre>(.+)<\/pre>.*<h3>Sample Input 3<\/h3><pre>(.+)<\/pre>.*<h3>Sample Output 3<\/h3><pre>(.+)<\/pre><\/section>\r?\n<\/div>/m
-    )
-    3.times do |i|
-      File.open("#{dir}input#{i + 1}.txt", "w") do |f| 
-        f.puts(match[i * 2 + 1])
+    html = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}").read
+    i = 1
+    while true
+      match = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}").read.match(
+        /<h3>Sample Input #{i}<\/h3>.*<pre>(.+)<\/pre>.*<h3>Sample Output #{i}<\/h3>[:space:]*<pre>([^<]+)<\/pre>/m
+      )
+      break unless match
+      File.open("#{dir}input#{i}.txt", "w") do |f| 
+        f.puts(match[1])
       end
-      File.open("#{dir}output#{i + 1}.txt", "w") do |f| 
-        f.puts(match[i * 2 + 2])
+      File.open("#{dir}output#{i}.txt", "w") do |f| 
+        f.puts(match[2])
       end
+      i += 1
     end
   end
 
