@@ -32,3 +32,6 @@
 *.app
 
 /contest
+/*.cpp
+/*.rb
+/*.py

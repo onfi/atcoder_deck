@@ -33,20 +33,46 @@ using namespace std;
 
 # define INIT() cin.tie(0); ios::sync_with_stdio(false)
 
+// 二分探索するデータの型
+# define BSEARCH_TYPE long long
+
 // `chmax(a, b)` aがbより小さければ、aをbに上書きする。chminは逆
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 
 const int MOD = 1e9 + 7;
+
+vector<BSEARCH_TYPE> v;
+
+// index が条件を満たすかどうか
+bool isOK(int index, BSEARCH_TYPE key) {
+    if (v[index] >= key) return true;
+    else return false;
+}
+
+int bsearch(BSEARCH_TYPE key) {
+    int ng = -1;
+    int ok = (int)v.size();
+
+    while (abs(ok - ng) > 1) {
+        int mid = (ok + ng) / 2;
+
+        if (isOK(mid, key)) ok = mid;
+        else ng = mid;
+    }
+    return ok;
+}
+
 int main() {
     INIT();
 
-    ll a, b;
-    cin >> a >> b;
-    if((a * b) % 2 == 0) {
-        cout << "Even";
-    } else {
-        cout << "Odd";
+    ll n;
+    cin >> n;
+    string a;
+    REP(i, n) {
+        BSEARCH_TYPE val;
+        v.pb(val);
     }
+    cout << "No";
     return 0;
 }

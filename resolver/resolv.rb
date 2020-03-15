@@ -2,14 +2,22 @@ require "open-uri"
 require "time"
 CUR = __dir__ + '/../'
 ARGV.each do |number|
+  number = number.sub(/\.cpp$/, '')
   match = number.match(/([a-z0-9]+)_([0-9a-z])/)
   contest = match[1]
   c = match[2]
   dir = "#{CUR}contest/#{contest}/#{number}/"
   # テストケースをダウンロードする
   unless File.exist?("#{dir}input1.txt")
+    puts "load a sample from https://atcoder.jp/contests/#{contest}/tasks/#{number}"
     `mkdir -p #{dir}`
-    html = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}").read
+    cookie =
+      if File.exist?("#{dir}tmp/cookie.txt")
+        open("#{dir}tmp/cookie.txt").read
+      else
+        ""
+      end
+    html = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}", {"cookie" => cookie}).read
     i = 1
     while true
       match = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}").read.match(
