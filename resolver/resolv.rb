@@ -17,7 +17,13 @@ ARGV.each do |number|
       else
         ""
       end
-    html = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}", {"cookie" => cookie}).read
+    unless File.exist?("#{CUR}tmp/#{number}.html")
+      `mkdir -p #{CUR}tmp`
+      File.open("#{CUR}tmp/#{number}.html", "w") do |f| 
+        f.puts(open("https://atcoder.jp/contests/#{contest}/tasks/#{number}", {"cookie" => cookie}).read)
+      end
+    end
+    html = open("#{CUR}tmp/#{number}.html").read
     i = 1
     while true
       match = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}").read.match(
