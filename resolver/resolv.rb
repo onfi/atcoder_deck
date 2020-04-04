@@ -10,7 +10,6 @@ ARGV.each do |number|
   # テストケースをダウンロードする
   unless File.exist?("#{dir}input1.txt")
     puts "load a sample from https://atcoder.jp/contests/#{contest}/tasks/#{number}"
-    `mkdir -p #{dir}`
     cookie =
       if File.exist?("#{dir}tmp/cookie.txt")
         open("#{dir}tmp/cookie.txt").read
@@ -18,6 +17,7 @@ ARGV.each do |number|
         ""
       end
     unless File.exist?("#{CUR}tmp/#{number}.html")
+      puts `ls #{CUR}tmp/#{number}.html`
       `mkdir -p #{CUR}tmp`
       File.open("#{CUR}tmp/#{number}.html", "w") do |f| 
         f.puts(open("https://atcoder.jp/contests/#{contest}/tasks/#{number}", {"cookie" => cookie}).read)
@@ -26,7 +26,7 @@ ARGV.each do |number|
     html = open("#{CUR}tmp/#{number}.html").read
     i = 1
     while true
-      match = open("https://atcoder.jp/contests/#{contest}/tasks/#{number}").read.match(
+      match = html.match(
         /<h3>Sample Input #{i}<\/h3>.*<pre>(.+)<\/pre>.*<h3>Sample Output #{i}<\/h3>[:space:]*<pre>([^<]+)<\/pre>/m
       )
       break unless match
