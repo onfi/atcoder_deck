@@ -42,7 +42,7 @@ ARGV.each do |number|
     time = Time.now
     result = `cat #{dir}input#{i}.txt | #{path}`
     expected = open("#{dir}output#{i}.txt").read
-    if result.chomp == expected.chomp
+    if result.chomp.gsub(/\r?\n/, "\n") == expected.chomp.gsub(/\r?\n/, "\n")
       puts "AC #{(Time.now.usec - time.usec) / 1000}ms"
     else
       puts "WA"
