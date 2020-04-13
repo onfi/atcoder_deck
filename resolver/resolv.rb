@@ -10,21 +10,15 @@ ARGV.each do |number|
   # テストケースをダウンロードする
   unless File.exist?("#{dir}input1.txt")
     puts "load a sample from https://atcoder.jp/contests/#{contest}/tasks/#{number}"
-    cookie =
-      if File.exist?("#{dir}tmp/cookie.txt")
-        open("#{dir}tmp/cookie.txt").read
-      else
-        ""
-      end
     unless File.exist?("#{CUR}tmp/#{number}.html")
-      puts `ls #{CUR}tmp/#{number}.html`
       `mkdir -p #{CUR}tmp`
       File.open("#{CUR}tmp/#{number}.html", "w") do |f| 
-        f.puts(open("https://atcoder.jp/contests/#{contest}/tasks/#{number}", {"cookie" => cookie}).read)
+        f.puts(open("https://atcoder.jp/contests/#{contest}/tasks/#{number}").read)
       end
     end
     html = open("#{CUR}tmp/#{number}.html").read
     i = 1
+    `mkdir -p #{dir}`
     while true
       match = html.match(
         /<h3>Sample Input #{i}<\/h3>.*<pre>(.+)<\/pre>.*<h3>Sample Output #{i}<\/h3>[:space:]*<pre>([^<]+)<\/pre>/m
@@ -41,7 +35,7 @@ ARGV.each do |number|
   end
 
   ## コンパイルする
-  path = `#{CUR}build.sh #{number}.cpp`
+  path = `#{CUR}build_zapcc.sh #{number}.cpp`
   i = 1
   while File.exist?("#{dir}input#{i}.txt")
     print "#{i}: "

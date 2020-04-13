@@ -9,6 +9,7 @@ using namespace std;
 // #define ll intに変えればメモリ節約
 #define ll long long
 
+
 /* 
  * ループ系のマクロ
  * `REP(i, 10) { cout << i; }`のように、変数名,回数で動く
