@@ -49,38 +49,42 @@ struct edge {
     ll to;
     ll cost;
 };
+vector<edge> Graph[MAX_V];
 
-using P = pair<ll, ll>;
+using _DijkstraCsot = pair<ll, ll>;
+ll _dijkstraResults[MAX_V];
 
-vector<edge> G[MAX_V];
-ll d[MAX_V];
-
-void dijkstra(ll V, ll s) {
-    priority_queue<P, vector<P>, greater<P> > que;
-    fill(d, d+V, INF);
-    d[s] = 0;
-    que.push(P(0, s));
+ll* dijkstra(ll V, ll s) {
+    priority_queue<_DijkstraCsot, vector<_DijkstraCsot>, greater<_DijkstraCsot> > que;
+    fill(_dijkstraResults, _dijkstraResults + V, INF);
+    _dijkstraResults[s] = 0;
+    que.push(_DijkstraCsot(0, s));
 
     while (!que.empty()) {
-        P p = que.top();
+        _DijkstraCsot p = que.top();
         que.pop();
         ll v = p.second;
-        if (d[v] < p.first) continue;
+        if (_dijkstraResults[v] < p.first) continue;
 
-        for (ll i=0; i<G[v].size(); ++i) {
-            edge e = G[v][i];
-            if (d[e.to] > d[v] + e.cost) {
-                d[e.to] = d[v] + e.cost;
-                que.push(P(d[e.to], e.to));
+        REP(i, Graph[v].size()) {
+            edge e = Graph[v][i];
+            if (_dijkstraResults[e.to] > _dijkstraResults[v] + e.cost) {
+                _dijkstraResults[e.to] = _dijkstraResults[v] + e.cost;
+                que.push(_DijkstraCsot(_dijkstraResults[e.to], e.to));
             }
         }
     }
+    return _dijkstraResults;
+}
+void pushOneWay(ll from,ll to, ll cost) {
+    edge e = {to, cost};
+    Graph[from].push_back(e);
+}
+void pushTwoWay(ll from,ll to, ll cost) {
+    pushOneWay(from, to, cost);
+    pushOneWay(to, from, cost);
 }
 
-void pushV(ll node,ll to, ll cost) {
-    edge e = {to, cost};
-    G[node].push_back(e);
-}
 int main() {
     INIT();
 
@@ -88,18 +92,16 @@ int main() {
     cin >> n >> x >> y;
     x--;
     y--;
-    pushV(0, 1, 1);
-    REPS(i,1,n - 1) {
-        pushV(i, i - 1, 1);
-        pushV(i, i + 1, 1);
-    }
-    pushV(n - 1, n - 2, 1);
-    pushV(x, y, 1);
-    pushV(y, x, 1);
     REP(i,n) {
-        dijkstra(n, i);
+        pushTwoWay(i, i - 1, 1);
+    }
+    pushTwoWay(x, y, 1);
+    REP(i,n) {
+        results[i] = 0;
+    }
+    REP(i,n) {
+        ll* d = dijkstra(n, i);
         REPS(j,i+1,n) {
-            cout << i << "から" << j << "までのコスト: " << d[j] << endl;
             results[d[j]]++;
         }
     }
