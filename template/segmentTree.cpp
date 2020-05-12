@@ -61,8 +61,7 @@ public:
         if(enabledSum) r_sum_q_node.assign(2 * n - 1, 0);
 
         // 直接値が入るのは、index + (n - 1)
-        for (int i = 0; i < sz; i++)
-        {
+        for (int i = 0; i < sz; i++) {
             if(enabledMin) r_min_q_node[i + n - 1] = v[i];
             if(enabledMax) r_max_q_node[i + n - 1] = v[i];
             if(enabledSum) r_sum_q_node[i + n - 1] = v[i];

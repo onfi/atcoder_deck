@@ -59,7 +59,7 @@ ll factional(ll n) {
     return fac[n];
 }
 ll nCr(ll n, ll r){
-	return (fac[n] * factionalInverse(r)) % MOD * factionalInverse(n-r) % MOD;
+	return (factional(n) * factionalInverse(r)) % MOD * factionalInverse(n-r) % MOD;
 }
 ll nPr(int n, int r) {
     if (n < 0 || r < 0 || n < r) return 0;
