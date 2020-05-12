@@ -50,14 +50,20 @@ void initFact() {
     }
 }
 
-ll nCr(ll n, ll r){
+ll factionalInverse(ll n) {
     if(!fac[0]) initFact();
-	return (fac[n] * finv[r]) % MOD * finv[n-r] % MOD;
+    return finv[n];
+}
+ll factional(ll n) {
+    if(!fac[0]) initFact();
+    return fac[n];
+}
+ll nCr(ll n, ll r){
+	return (fac[n] * factionalInverse(r)) % MOD * factionalInverse(n-r) % MOD;
 }
 ll nPr(int n, int r) {
-    if(!fac[0]) initFact();
     if (n < 0 || r < 0 || n < r) return 0;
-    return fac[n] * finv[n - r] % MOD;
+    return factional(n) * factionalInverse(n - r) % MOD;
 }
 
 int main() {
