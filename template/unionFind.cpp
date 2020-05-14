@@ -30,25 +30,28 @@ const int MOD = 1e9 + 7;
 
 struct UnionFind {
     ll n;
-    vector<ll> par,cnt;
+    vector<ll> par,rank;
 
     UnionFind(ll N) : par(N) {
         n = N;
         REP(i,n) par[i] = i;
+        rank.assign(n, 1);
     }
 
     ll root(ll x) {
-        while(par[x] != x) {
-            x = par[x];
+        ll tmp = x;
+        while(par[tmp] != tmp) {
+            tmp = par[tmp];
         }
-        return x;
+        return par[x] = tmp;
     }
 
     void unite(ll x, ll y) {
-        ll rx = root(x);
-        ll ry = root(y);
-        if (rx == ry) return;
-        par[rx] = ry;
+        ll rootX = root(x);
+        ll rootY = root(y);
+        if (rootX == rootY) return;
+        rank[rootY] += rank[rootX];
+        par[rootX] = rootY;
     }
 
     bool same(ll x, ll y) {
@@ -57,17 +60,8 @@ struct UnionFind {
         return rx == ry;
     }
 
-    void clean() {
-        cnt.assign(n, 0);
-        REP(i,n) {
-            par[i] = root(i);
-            cnt[par[i]]++;
-        };
-    }
-
-    // 実行前にclean必須！
     ll count(ll x) {
-        return cnt[root(x)];
+        return rank[root(x)];
     }
 };
 
@@ -88,7 +82,6 @@ int main() {
         blocks[a]++;
         blocks[b]++;
     }
-    unionFind.clean();
     REP(i,k) {
         ll c,d;
         cin >> c >> d;
