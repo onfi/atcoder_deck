@@ -4,7 +4,7 @@ using namespace std;
 
 #define ll long long
 const int MOD = 1e9 + 7;
-#define INF 1e+9
+#define INF 2e9
 
 #define REPS(i, a, n) for (ll i = (a); i < (ll)(n); ++i)
 #define REP(i, n) REPS(i, 0, n)
