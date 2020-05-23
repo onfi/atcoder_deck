@@ -18,7 +18,7 @@ const int MOD = 1e9 + 7;
 
 # define pb push_back
 
-# define INIT() cin.tie(0); ios::sync_with_stdio(false)
+# define INIT() cin.tie(0); ios::sync_with_stdio(false); cout << fixed << std::setprecision(20)
 
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
@@ -30,7 +30,7 @@ int main() {
 
     cin >> s;
     EACH(c,s) {
-        cout << SZ(s);
+        cout << c;
     }
-    return 0;
+    cout << fixed << std::setprecision(20) << 1;
 }
