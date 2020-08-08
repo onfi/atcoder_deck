@@ -1,3 +1,4 @@
+// https://atcoder.jp/contests/abc174/tasks/abc174_e
 #include <bits/stdc++.h>
  
 using namespace std;
@@ -25,38 +26,52 @@ const int MOD = 1e9 + 7;
 template<class T>bool chmax(T &a, const T &b) { if (a<b) { a=b; return 1; } return 0; }
 template<class T>bool chmin(T &a, const T &b) { if (b<a) { a=b; return 1; } return 0; }
 
+ll n,k;
 # define BSEARCH_TYPE ll
 vector<BSEARCH_TYPE> v;
+BSEARCH_TYPE key;
 
-// index が条件を満たすかどうか
-bool isOK(int index, BSEARCH_TYPE key) {
-    if (v[index] >= key) return true;
-    else return false;
-}
+// val が条件を満たすかどうか
+bool isOK(ll val) {
+    // // 普通のbsearch, valはindex
+    // if (v[val] >= key) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
 
-int bsearch(BSEARCH_TYPE key) {
-    int ng = -1;
-    int ok = (int)v.size();
-
-    while (abs(ok - ng) > 1) {
-        int mid = (ok + ng) / 2;
-
-        if (isOK(mid, key)) ok = mid;
-        else ng = mid;
+    ll cnt = 0;
+    for(auto&& a : v) {
+        cnt += (a + val - 1) / val;
     }
-    return ok;
+    return cnt <= k + n;
 }
 
-ll n,m,k;
-string s;
+// leftはmin - 1
+ll bsearch(ll left, ll right) {
+    while (abs(right - left) > 1) {
+        ll mid = (right + left) / 2;
+
+        if (isOK(mid)) right = mid;
+        else left = mid;
+    }
+    return right;
+}
+
+// vから普通にbsearchする
+ll bsearchVec(BSEARCH_TYPE _key) {
+    key = _key;
+    return bsearch(-1, (int)v.size());
+}
+
 int main() {
     INIT();
 
-    cin >> n;
+    cin >> n >> k;
+    v.resize(n);
     REP(i, n) {
-        BSEARCH_TYPE val;
-        v.pb(val);
+        cin >> v[i];
     }
-    cout << "No";
+    cout << bsearch(0, *max_element(v.begin(), v.end()));
     return 0;
 }

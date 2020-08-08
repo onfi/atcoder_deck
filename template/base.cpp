@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
- 
+// https://boostjp.github.io/tips/multiprec-int.html
+// https://boostjp.github.io/tips/multiprec-float.html
+#include <boost/multiprecision/cpp_dec_float.hpp>
+
+namespace mp = boost::multiprecision;
 using namespace std;
 
 #define ll long long
