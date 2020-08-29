@@ -53,7 +53,7 @@ vector<edge> Graph[MAX_V];
 using _DijkstraCsot = pair<ll, ll>;
 
 // v = Graphの長さ。
-ll* dijkstra(ll V, ll s) {
+vector<ll> dijkstra(ll V, ll s) {
     vector<ll> _dijkstraResults(V, INF);
     priority_queue<_DijkstraCsot, vector<_DijkstraCsot>, greater<_DijkstraCsot> > que;
     _dijkstraResults[s] = 0;
