@@ -105,7 +105,6 @@ int main() {
         }
     }
     REPS(i,1,n) {
-        cout << fixed << results[i] << endl;
+        cout << results[i] << endl;
     }
-    return 0;
 }

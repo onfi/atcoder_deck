@@ -95,5 +95,4 @@ int main() {
         if(i > 0) cout << " ";
         cout << unionFind.count(i) - blocks[i];
     }
-    return 0;
 }

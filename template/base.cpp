@@ -37,5 +37,5 @@ int main() {
     EACH(c,s) {
         cout << c;
     }
-    cout << fixed << std::setprecision(20) << 1;
+    cout << 1;
 }
