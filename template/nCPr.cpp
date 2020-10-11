@@ -1,12 +1,21 @@
 #include <bits/stdc++.h>
  
+#define ll long long
 using namespace std;
+
+
+#define REPS(i, a, n) for (ll i = (a); i < (ll)(n); ++i)
+#define REP(i, n) REPS(i, 0, n)
+#define RREP(i, n) REPS(i, 1, n + 1)
+#define DEPS(i, a, n) for (ll i = (a); i >= (ll)(n); --i)
+#define DEP(i, n) DEPS(i, n, 0)
+#define EACH(i, n) for (auto&& i : n)
 
 const int MOD = 1e9 + 7;
 
 class mint {
-    long long x;
 public:
+    long long x;
     mint(long long x=0) : x((x % MOD + MOD) % MOD) {}
     mint operator-() const { 
       return mint(-x);
